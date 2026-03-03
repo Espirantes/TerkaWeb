@@ -1,10 +1,30 @@
+import Image from "next/image";
+
 const GALLERY_ITEMS = [
-  { label: "Zahrada a okolí", color: "bg-primary/20" },
-  { label: "Společenská místnost", color: "bg-accent/20" },
-  { label: "Jídelna", color: "bg-primary/15" },
-  { label: "Jednolůžkový pokoj", color: "bg-accent/15" },
-  { label: "Rehabilitační místnost", color: "bg-primary/10" },
-  { label: "Terasa", color: "bg-accent/10" },
+  {
+    label: "Zahrada a okolí",
+    src: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80&fit=crop",
+  },
+  {
+    label: "Společenská místnost",
+    src: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=800&q=80&fit=crop",
+  },
+  {
+    label: "Jídelna",
+    src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80&fit=crop",
+  },
+  {
+    label: "Jednolůžkový pokoj",
+    src: "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800&q=80&fit=crop",
+  },
+  {
+    label: "Rehabilitační místnost",
+    src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80&fit=crop",
+  },
+  {
+    label: "Terasa",
+    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fit=crop",
+  },
 ] as const;
 
 export function Gallery() {
@@ -22,18 +42,22 @@ export function Gallery() {
           {GALLERY_ITEMS.map((item) => (
             <div
               key={item.label}
-              className={`flex aspect-[4/3] items-center justify-center rounded-2xl ${item.color}`}
+              className="group relative aspect-[4/3] overflow-hidden rounded-2xl"
             >
-              <span className="text-lg font-medium text-text-light">
-                {item.label}
-              </span>
+              <Image
+                src={item.src}
+                alt={item.label}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/50 to-transparent p-4">
+                <span className="text-lg font-medium text-white">
+                  {item.label}
+                </span>
+              </div>
             </div>
           ))}
         </div>
-
-        <p className="mt-8 text-center text-sm text-text-light">
-          Fotografie budou doplněny. Pro osobní prohlídku nás kontaktujte.
-        </p>
       </div>
     </section>
   );

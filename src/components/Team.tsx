@@ -1,27 +1,37 @@
+import Image from "next/image";
+
 const TEAM_MEMBERS = [
   {
     name: "Mgr. Jana Nováková",
     role: "Ředitelka",
     description:
       "Vede náš domov s vášní a 20letou zkušeností v sociálních službách.",
+    photo:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&fit=crop&crop=face",
   },
   {
     name: "Bc. Marie Dvořáková",
     role: "Vrchní sestra",
     description:
       "Dohlíží na kvalitu zdravotní péče a koordinuje ošetřovatelský tým.",
+    photo:
+      "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80&fit=crop&crop=face",
   },
   {
     name: "Mgr. Petra Svobodová",
     role: "Sociální pracovnice",
     description:
       "Pomáhá klientům a rodinám s administrativou a sociálním poradenstvím.",
+    photo:
+      "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400&q=80&fit=crop&crop=face",
   },
   {
     name: "Bc. Tomáš Veselý",
     role: "Fyzioterapeut",
     description:
       "Sestavuje individuální rehabilitační plány a vede skupinová cvičení.",
+    photo:
+      "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80&fit=crop&crop=face",
   },
 ] as const;
 
@@ -44,13 +54,13 @@ export function Team() {
               key={member.name}
               className="rounded-2xl border border-secondary bg-cream p-6 text-center"
             >
-              <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-3xl font-bold text-primary">
-                {member.name
-                  .split(" ")
-                  .filter((part) => part[0] !== part[0].toLowerCase())
-                  .slice(-2)
-                  .map((part) => part[0])
-                  .join("")}
+              <div className="relative mx-auto h-28 w-28 overflow-hidden rounded-full">
+                <Image
+                  src={member.photo}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                />
               </div>
               <h3 className="mt-4 text-lg font-bold text-text">
                 {member.name}

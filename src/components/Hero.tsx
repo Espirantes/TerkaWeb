@@ -1,15 +1,28 @@
+import Image from "next/image";
+
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-secondary via-cream to-white">
-      <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-24 text-center md:px-8 md:py-32">
-        <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+    <section className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80&fit=crop"
+          alt="Domov důchodců Řepy"
+          fill
+          className="object-cover brightness-[0.3]"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/30 to-text/60" />
+      </div>
+
+      <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-28 text-center md:px-8 md:py-40">
+        <span className="mb-4 inline-block rounded-full bg-white/20 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
           Praha — Řepy
         </span>
-        <h1 className="max-w-3xl text-4xl font-bold leading-tight text-text md:text-5xl lg:text-6xl">
+        <h1 className="max-w-3xl text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
           Domov, kde se cítíte{" "}
-          <span className="text-primary">jako doma</span>
+          <span className="text-accent">jako doma</span>
         </h1>
-        <p className="mt-6 max-w-2xl text-lg text-text-light md:text-xl">
+        <p className="mt-6 max-w-2xl text-lg text-white/85 md:text-xl">
           Nabízíme kvalitní péči a příjemné prostředí pro seniory v klidné
           čtvrti Řepy. S láskou a respektem ke každému.
         </p>
@@ -22,7 +35,7 @@ export function Hero() {
           </a>
           <a
             href="#o-nas"
-            className="rounded-xl border-2 border-primary/20 bg-white px-8 py-4 text-lg font-semibold text-primary transition-all hover:border-primary/40 hover:bg-primary/5"
+            className="rounded-xl border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20"
           >
             Více o nás
           </a>
@@ -36,12 +49,12 @@ export function Hero() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="rounded-2xl bg-white/80 px-8 py-6 shadow-sm"
+              className="rounded-2xl bg-white/15 px-8 py-6 backdrop-blur-sm"
             >
-              <div className="text-3xl font-bold text-primary">
+              <div className="text-3xl font-bold text-white">
                 {stat.number}
               </div>
-              <div className="text-sm text-text-light">{stat.label}</div>
+              <div className="text-sm text-white/70">{stat.label}</div>
             </div>
           ))}
         </div>

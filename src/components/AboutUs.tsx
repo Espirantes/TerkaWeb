@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const VALUES = [
   {
     icon: (
@@ -35,15 +37,30 @@ export function AboutUs() {
   return (
     <section id="o-nas" className="bg-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold text-text md:text-4xl">O nás</h2>
-          <p className="mt-6 text-lg text-text-light">
-            Domov důchodců Řepy funguje již více než 25 let v klidné rezidenční
-            čtvrti Prahy 17. Nabízíme důstojné bydlení a komplexní péči pro
-            seniory, kteří potřebují pomoc v každodenním životě. Náš areál je
-            obklopen zelení a nabízí příjemné prostředí pro odpočinek i
-            aktivní trávení času.
-          </p>
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            <Image
+              src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&q=80&fit=crop"
+              alt="Společný prostor domova důchodců"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div>
+            <h2 className="text-3xl font-bold text-text md:text-4xl">
+              O nás
+            </h2>
+            <p className="mt-6 text-lg text-text-light">
+              Domov důchodců Řepy funguje již více než 25 let v klidné
+              rezidenční čtvrti Prahy 17. Nabízíme důstojné bydlení a
+              komplexní péči pro seniory, kteří potřebují pomoc v každodenním
+              životě.
+            </p>
+            <p className="mt-4 text-lg text-text-light">
+              Náš areál je obklopen zelení a nabízí příjemné prostředí pro
+              odpočinek i aktivní trávení času.
+            </p>
+          </div>
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
