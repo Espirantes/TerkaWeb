@@ -1,25 +1,12 @@
-const NEWS_ITEMS = [
-  {
-    date: "28. února 2026",
-    title: "Jarní zahradní slavnost",
-    excerpt:
-      "Zveme všechny klienty i jejich rodiny na tradiční jarní slavnost v naší zahradě. Připraveny jsou soutěže, občerstvení a hudební vystoupení.",
-  },
-  {
-    date: "15. února 2026",
-    title: "Nová rehabilitační místnost",
-    excerpt:
-      "S radostí oznamujeme otevření nově zrekonstruované rehabilitační místnosti s moderním vybavením pro fyzioterapii.",
-  },
-  {
-    date: "3. února 2026",
-    title: "Výtvarná výstava klientů",
-    excerpt:
-      "V prostorách společenské místnosti probíhá výstava výtvarných prací našich klientů. Výstava potrvá do konce března.",
-  },
-] as const;
+import type { Article } from "@/lib/supabase/types";
 
-export function News() {
+interface NewsProps {
+  articles: Article[];
+}
+
+export function News({ articles }: NewsProps) {
+  if (articles.length === 0) return null;
+
   return (
     <section id="aktuality" className="bg-cream py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
@@ -33,18 +20,24 @@ export function News() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {NEWS_ITEMS.map((item) => (
+          {articles.map((article) => (
             <article
-              key={item.title}
+              key={article.id}
               className="rounded-2xl bg-white p-8 shadow-sm transition-shadow hover:shadow-md"
             >
               <time className="text-sm font-medium text-accent">
-                {item.date}
+                {article.published_at
+                  ? new Date(article.published_at).toLocaleDateString("cs-CZ", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })
+                  : ""}
               </time>
               <h3 className="mt-2 text-xl font-bold text-text">
-                {item.title}
+                {article.title}
               </h3>
-              <p className="mt-3 text-text-light">{item.excerpt}</p>
+              <p className="mt-3 text-text-light">{article.excerpt}</p>
             </article>
           ))}
         </div>

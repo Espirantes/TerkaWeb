@@ -1,6 +1,39 @@
 "use client";
 
+import { useState } from "react";
+
 export function Contact() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement)
+        .value,
+    };
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      setStatus("sent");
+      form.reset();
+    } else {
+      setStatus("error");
+    }
+  }
+
   return (
     <section id="kontakt" className="bg-cream py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
@@ -82,66 +115,92 @@ export function Contact() {
 
           <div className="rounded-2xl bg-white p-8 shadow-sm">
             <h3 className="text-xl font-bold text-text">Napište nám</h3>
-            <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-1 block text-sm font-medium text-text"
-                >
-                  Jméno a příjmení
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full rounded-xl border border-secondary bg-cream px-4 py-3 text-text outline-none transition-colors focus:border-primary"
-                />
+
+            {status === "sent" ? (
+              <div className="mt-6 rounded-xl bg-primary/10 p-6 text-center">
+                <p className="text-lg font-semibold text-primary">
+                  Děkujeme za zprávu!
+                </p>
+                <p className="mt-2 text-text-light">
+                  Ozveme se vám co nejdříve.
+                </p>
               </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-1 block text-sm font-medium text-text"
+            ) : (
+              <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-1 block text-sm font-medium text-text"
+                  >
+                    Jméno a příjmení
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full rounded-xl border border-secondary bg-cream px-4 py-3 text-text outline-none transition-colors focus:border-primary"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-1 block text-sm font-medium text-text"
+                  >
+                    E-mail
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full rounded-xl border border-secondary bg-cream px-4 py-3 text-text outline-none transition-colors focus:border-primary"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="mb-1 block text-sm font-medium text-text"
+                  >
+                    Telefon
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    className="w-full rounded-xl border border-secondary bg-cream px-4 py-3 text-text outline-none transition-colors focus:border-primary"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="mb-1 block text-sm font-medium text-text"
+                  >
+                    Zpráva
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
+                    className="w-full rounded-xl border border-secondary bg-cream px-4 py-3 text-text outline-none transition-colors focus:border-primary"
+                  />
+                </div>
+
+                {status === "error" && (
+                  <p className="text-sm text-red-600">
+                    Nepodařilo se odeslat zprávu. Zkuste to prosím znovu.
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="w-full rounded-xl bg-accent px-6 py-4 font-semibold text-white transition-colors hover:bg-accent-dark disabled:opacity-50"
                 >
-                  E-mail
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full rounded-xl border border-secondary bg-cream px-4 py-3 text-text outline-none transition-colors focus:border-primary"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="mb-1 block text-sm font-medium text-text"
-                >
-                  Telefon
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  className="w-full rounded-xl border border-secondary bg-cream px-4 py-3 text-text outline-none transition-colors focus:border-primary"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="message"
-                  className="mb-1 block text-sm font-medium text-text"
-                >
-                  Zpráva
-                </label>
-                <textarea
-                  id="message"
-                  rows={4}
-                  className="w-full rounded-xl border border-secondary bg-cream px-4 py-3 text-text outline-none transition-colors focus:border-primary"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full rounded-xl bg-accent px-6 py-4 font-semibold text-white transition-colors hover:bg-accent-dark"
-              >
-                Odeslat zprávu
-              </button>
-            </form>
+                  {status === "sending" ? "Odesílání..." : "Odeslat zprávu"}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

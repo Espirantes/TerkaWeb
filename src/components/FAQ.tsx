@@ -2,54 +2,46 @@
 
 import { useState } from "react";
 
-const FAQ_ITEMS = [
-  {
-    question: "Jak podat žádost o umístění?",
-    answer:
-      "Žádost můžete podat osobně, poštou nebo e-mailem. K žádosti přiložte kopii občanského průkazu, lékařské zprávy a rozhodnutí o příspěvku na péči (pokud máte). Formulář žádosti je ke stažení na našich stránkách nebo k vyzvednutí na recepci.",
-  },
-  {
-    question: "Jaké jsou podmínky přijetí?",
-    answer:
-      "Přijímáme seniory od 65 let, kteří potřebují pravidelnou pomoc v každodenním životě. Podmínkou je podaná žádost, lékařské vyjádření a osobní pohovor. Přednost mají žadatelé s vyšším stupněm příspěvku na péči.",
-  },
-  {
-    question: "Co si mám vzít s sebou?",
-    answer:
-      "Osobní oblečení, hygienické potřeby, oblíbené předměty z domova (fotografie, knihy). Pokoj je plně vybaven nábytkem, ložním prádlem a ručníky. Můžete si přinést i vlastní menší nábytek po dohodě.",
-  },
-  {
-    question: "Jaké jsou návštěvní hodiny?",
-    answer:
-      "Návštěvy jsou vítány denně od 9:00 do 18:00. Po předchozí domluvě je možné dohodnout i návštěvu mimo tyto hodiny. Rodinní příslušníci se mohou účastnit i společných aktivit.",
-  },
-  {
-    question: "Je možné si domov předem prohlédnout?",
-    answer:
-      "Ano, osobní prohlídky domova pořádáme po předchozí domluvě, zpravidla ve všední dny od 10:00 do 15:00. Kontaktujte nás telefonicky nebo e-mailem.",
-  },
-] as const;
+interface FaqItem {
+  question: string;
+  answer: string;
+}
 
-export function FAQ() {
+interface FAQProps {
+  title?: string;
+  subtitle?: string;
+  items?: FaqItem[];
+}
+
+const FALLBACK_ITEMS: FaqItem[] = [
+  { question: "Jak podat žádost o umístění?", answer: "Žádost můžete podat osobně, poštou nebo e-mailem. K žádosti přiložte kopii občanského průkazu, lékařské zprávy a rozhodnutí o příspěvku na péči (pokud máte). Formulář žádosti je ke stažení na našich stránkách nebo k vyzvednutí na recepci." },
+  { question: "Jaké jsou podmínky přijetí?", answer: "Přijímáme seniory od 65 let, kteří potřebují pravidelnou pomoc v každodenním životě. Podmínkou je podaná žádost, lékařské vyjádření a osobní pohovor. Přednost mají žadatelé s vyšším stupněm příspěvku na péči." },
+  { question: "Co si mám vzít s sebou?", answer: "Osobní oblečení, hygienické potřeby, oblíbené předměty z domova (fotografie, knihy). Pokoj je plně vybaven nábytkem, ložním prádlem a ručníky. Můžete si přinést i vlastní menší nábytek po dohodě." },
+  { question: "Jaké jsou návštěvní hodiny?", answer: "Návštěvy jsou vítány denně od 9:00 do 18:00. Po předchozí domluvě je možné dohodnout i návštěvu mimo tyto hodiny. Rodinní příslušníci se mohou účastnit i společných aktivit." },
+  { question: "Je možné si domov předem prohlédnout?", answer: "Ano, osobní prohlídky domova pořádáme po předchozí domluvě, zpravidla ve všední dny od 10:00 do 15:00. Kontaktujte nás telefonicky nebo e-mailem." },
+];
+
+export function FAQ({ title, subtitle, items }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const faqItems = items ?? FALLBACK_ITEMS;
 
   return (
     <section id="faq" className="bg-white py-20 md:py-28">
       <div className="mx-auto max-w-3xl px-4 md:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-text md:text-4xl">
-            Časté dotazy
+            {title ?? "Časté dotazy"}
           </h2>
           <p className="mt-4 text-lg text-text-light">
-            Odpovědi na nejčastější otázky.
+            {subtitle ?? "Odpovědi na nejčastější otázky."}
           </p>
         </div>
 
         <div className="mt-12 space-y-3">
-          {FAQ_ITEMS.map((item, i) => (
+          {faqItems.map((item, i) => (
             <div
               key={item.question}
-              className="rounded-xl border border-secondary bg-cream overflow-hidden"
+              className="overflow-hidden rounded-xl border border-secondary bg-cream"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
