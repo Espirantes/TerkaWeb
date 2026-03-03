@@ -50,6 +50,12 @@ export function Header() {
           >
             +420 222 333 444
           </a>
+          <a
+            href="/admin"
+            className="rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-medium text-primary transition-colors hover:bg-primary/20"
+          >
+            Přihlásit
+          </a>
         </div>
 
         <button
